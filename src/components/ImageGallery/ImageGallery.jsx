@@ -13,16 +13,42 @@ class ImageGallery extends Component {
     error: null,
   };
 
+  getImages = () => {
+    // перед запитом включаємо індикатор завантаження
+    this.setState({ isLoading: true });
+    // в результаті успішного запиту ми записуємо наші дані в images
+    getImagesApi(this.props.query, this.state.page)
+      .then(images => this.setState({ images }))
+      .catch(error => this.setState({ error }))
+      .finally(() => this.setState({ isLoading: false }));
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.query !== this.props.query) {
+      this.getImages();
+    }
+  }
+
   render() {
     const { images, isLoading, error } = this.state;
 
     return (
-      <ul className="gallery">
-        <ImageGalleryItem images={images} />
-        <Button />
+      <>
+        <ul className="gallery">
+          {images.map(({ id, webformatURL, largeImageURL }) => {
+            return (
+              <ImageGalleryItem
+                id={id}
+                webformatURL={webformatURL}
+                largeImageURL={largeImageURL}
+              />
+            );
+          })}
+        </ul>
+        {images.length > 0 && <Button />}
         {error && <p>{error.message}</p>}
         {isLoading && <p>Loading...</p>}
-      </ul>
+      </>
     );
   }
 }

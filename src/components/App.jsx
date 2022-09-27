@@ -6,13 +6,18 @@ class App extends Component {
   state = {
     query: '',
   };
+  // перезаписуємо значення query
+  onSubmit = query => {
+    this.setState({ query: query });
+  };
 
   render() {
     const { query } = this.state;
+    const { onSubmit } = this;
 
     return (
       <div className="App">
-        <Searchbar onSubmit={'onSubmit'} />
+        <Searchbar onSubmit={onSubmit} />
         <ImageGallery query={query} />
       </div>
     );

@@ -1,5 +1,5 @@
-const Button = () => {
-  return <button>button</button>;
+const Button = ({ handleLoadMoreImages }) => {
+  return <button onClick={handleLoadMoreImages}>button</button>;
 };
 
 export default Button;

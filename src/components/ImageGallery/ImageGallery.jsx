@@ -2,8 +2,10 @@ import Button from 'components/Button';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import { Component } from 'react';
 import { getImagesApi } from './../../utils/imagesApi';
+import Loader from './../Loader/Loader';
+import s from './ImageGallery.module.scss';
 
-getImagesApi();
+// import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 class ImageGallery extends Component {
   state = {
@@ -34,20 +36,21 @@ class ImageGallery extends Component {
 
     return (
       <>
-        <ul className="gallery">
+        <ul className={s.ImageGallery}>
           {images.map(({ id, webformatURL, largeImageURL }) => {
             return (
               <ImageGalleryItem
+                key={id}
                 id={id}
                 webformatURL={webformatURL}
                 largeImageURL={largeImageURL}
               />
             );
           })}
+          {images.length > 0 && <Button />}
         </ul>
-        {images.length > 0 && <Button />}
-        {error && <p>{error.message}</p>}
-        {isLoading && <p>Loading...</p>}
+        {/* {error && <p>{error.message}</p>} */}
+        {isLoading && <Loader />}
       </>
     );
   }

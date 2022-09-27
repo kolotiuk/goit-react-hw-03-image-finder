@@ -1,7 +1,13 @@
-const ImageGalleryItem = ({ id, webformatURL, largeImageURL }) => {
+import s from './ImageGalleryItem.module.scss';
+
+const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
   return (
-    <li key={id} className="gallery-item">
-      <img src={webformatURL} alt="" />
+    <li className={s.ImageGalleryItem}>
+      <img
+        className={s['ImageGalleryItem - image']}
+        src={webformatURL}
+        alt=""
+      />
     </li>
   );
 };

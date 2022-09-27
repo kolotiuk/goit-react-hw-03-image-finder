@@ -2,17 +2,17 @@ import s from './Searchbar.module.scss';
 
 const Searchbar = () => {
   return (
-    <header class={s.Searchbar}>
-      <form class={s.SearchForm}>
-        <button type="submit" class={s['SearchForm-button']}>
-          <span class={s['SearchForm-button-label']}>Search</span>
+    <header className={s.Searchbar}>
+      <form className={s.SearchForm}>
+        <button type="submit" className={s['SearchForm-button']}>
+          <span className={s['SearchForm-button-label']}>Search</span>
         </button>
 
         <input
-          class={s['SearchForm-input']}
+          className={s['SearchForm-input']}
           type="text"
-          autocomplete="off"
-          autofocus
+          autoComplete="off"
+          autoFocus
           placeholder="Search images and photos"
         />
       </form>

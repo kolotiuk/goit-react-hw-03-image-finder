@@ -1,24 +1,42 @@
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import s from './Modal.module.scss';
 
 const modalRef = document.querySelector('.modal');
+// { modalImg, closeModal }
+class Modal extends Component {
+  handleEsc = e => {
+    if (e.code === 'Escape') {
+      this.props.closeModal();
+    }
+  };
 
-const Modal = ({ modalImg }) => {
-  return createPortal(
-    <div className={s.Overlay}>
-      <div className={s.Modal}>
-        modal
-        <img src={modalImg} alt="" />
-      </div>
-    </div>,
-    modalRef
-  );
-};
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleEsc);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleEsc);
+  }
+
+  handleBackdrop = e => {
+    if (e.currentTarget === e.target) {
+      this.props.closeModal();
+    }
+  };
+
+  render() {
+    const { modalImg } = this.props;
+
+    return createPortal(
+      <div className={s.Overlay} onClick={this.handleBackdrop}>
+        <div className={s.Modal}>
+          <img src={modalImg} alt="" />
+        </div>
+      </div>,
+      modalRef
+    );
+  }
+}
 
 export default Modal;
-
-//  <div class="overlay">
-//   <div class="modal">
-//     <img src="" alt="" />
-//   </div>
-// </div>

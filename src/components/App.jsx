@@ -29,7 +29,7 @@ class App extends Component {
       <div className="App">
         <Searchbar onSubmit={onSubmit} />
         <ImageGallery query={query} toggleModal={toggleModal} />
-        {isModalOpen && <Modal modalImg={modalImg} />}
+        {isModalOpen && <Modal modalImg={modalImg} closeModal={toggleModal} />}
       </div>
     );
   }

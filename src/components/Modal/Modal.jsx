@@ -7,7 +7,7 @@ const modalRef = document.querySelector('.modal');
 class Modal extends Component {
   static propTypes = {
     closeModal: PropTypes.func.isRequired,
-    modalImg: PropTypes.func.isRequired,
+    modalImg: PropTypes.string.isRequired,
   };
 
   handleEsc = e => {

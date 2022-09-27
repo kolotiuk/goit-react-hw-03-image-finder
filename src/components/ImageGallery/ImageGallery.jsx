@@ -19,7 +19,6 @@ class ImageGallery extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.query !== this.props.query) {
       this.setState({ images: [], page: 1 });
-      // this.getImages();
     }
     // умова яка перевіряє чи page міняється, якщо помінявся то вона спрацьовує
     if (
@@ -32,9 +31,6 @@ class ImageGallery extends Component {
         this.getImages();
       }
     }
-    // if (prevState.page !== this.state.page) {
-    //   this.getImages();
-    // }
   }
 
   // метод який дозаписує дані ті що прийшли з бекенду по кнопці Load more
@@ -62,6 +58,7 @@ class ImageGallery extends Component {
 
   render() {
     const { images, isLoading, error } = this.state;
+    const { toggleModal } = this.props;
 
     return (
       <>
@@ -73,12 +70,14 @@ class ImageGallery extends Component {
                 id={id}
                 webformatURL={webformatURL}
                 largeImageURL={largeImageURL}
+                openModal={toggleModal}
               />
             );
           })}
-          {images.length > 0 && (
-            <Button handleLoadMoreImages={this.handleLoadMoreImages} />
-          )}
+          {images.length > 0 &&
+            (images.length < 12 || (
+              <Button handleLoadMoreImages={this.handleLoadMoreImages} />
+            ))}
         </ul>
         {isLoading && <Loader />}
         {error && <h1>{error.message}</h1>}

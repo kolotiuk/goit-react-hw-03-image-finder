@@ -10,7 +10,8 @@ import s from './ImageGallery.module.scss';
 class ImageGallery extends Component {
   state = {
     images: [],
-    page: 0,
+    page: 1,
+    // page: 0,
     isLoading: false,
     error: null,
   };
@@ -18,24 +19,40 @@ class ImageGallery extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.query !== this.props.query) {
       this.setState({ images: [], page: 1 });
+      // this.getImages();
     }
     // умова яка перевіряє чи page міняється, якщо помінявся то вона спрацьовує
-    if (prevState.page !== this.state.page) {
-      this.getImages();
+    if (
+      prevState.page !== this.state.page ||
+      (prevProps.query !== this.props.query && this.state.page === 1)
+    ) {
+      if (this.props.query === '') {
+        this.setState({ error: new Error('Value NONE!!!') });
+      } else {
+        this.getImages();
+      }
     }
+    // if (prevState.page !== this.state.page) {
+    //   this.getImages();
+    // }
   }
 
   // метод який дозаписує дані ті що прийшли з бекенду по кнопці Load more
   getImages = () => {
     // перед запитом включаємо індикатор завантаження
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, error: null });
     // в результаті успішного запиту ми записуємо наші дані в images
     getImagesApi(this.props.query, this.state.page)
       // беремо prev повертаємо обєкт в якому буде перезаписувати поле images в яке буде записувати новий масив в який покладе prev.images і добавить нові images які приходять із бекенду
-      .then(images =>
-        this.setState(prev => ({ images: [...prev.images, ...images] }))
-      )
-      .catch(error => this.setState({ error }))
+      .then(images => {
+        if (!images.length) {
+          throw new Error('Bad request!!!');
+        }
+        this.setState(prev => ({ images: [...prev.images, ...images] }));
+      })
+      .catch(error => {
+        this.setState({ error });
+      })
       .finally(() => this.setState({ isLoading: false }));
   };
 
@@ -63,8 +80,8 @@ class ImageGallery extends Component {
             <Button handleLoadMoreImages={this.handleLoadMoreImages} />
           )}
         </ul>
-        {/* {error && <p>{error.message}</p>} */}
         {isLoading && <Loader />}
+        {error && <h1>{error.message}</h1>}
       </>
     );
   }

@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import s from './Modal.module.scss';
 
 const modalRef = document.querySelector('.modal');
-// { modalImg, closeModal }
 class Modal extends Component {
   handleEsc = e => {
     if (e.code === 'Escape') {
@@ -31,7 +30,7 @@ class Modal extends Component {
     return createPortal(
       <div className={s.Overlay} onClick={this.handleBackdrop}>
         <div className={s.Modal}>
-          <img src={modalImg} alt="" />
+          <img className={s.ModalImg} src={modalImg} alt="" />
         </div>
       </div>,
       modalRef

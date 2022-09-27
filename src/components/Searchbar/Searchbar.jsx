@@ -2,18 +2,16 @@ import { Component } from 'react';
 import s from './Searchbar.module.scss';
 
 class Searchbar extends Component {
-  // інпут відповідає за те що вводить юзер в інпут
   state = {
     input: '',
   };
-  // метод який змінює input
+
   handleChangeInput = e => {
     this.setState({ input: e.target.value });
   };
-  // метод який відправляє дані по сабміт
+
   handleSubmit = e => {
     e.preventDefault();
-    // викликає функцію яка передається в пропсі і передаємо те що ввів юхер в інпут
     this.props.onSubmit(this.state.input);
   };
 

@@ -9,7 +9,7 @@ class App extends Component {
     isModalOpen: false,
     modalImg: null,
   };
-  // перезаписуємо значення query
+
   onSubmit = query => {
     this.setState({ query: query });
   };

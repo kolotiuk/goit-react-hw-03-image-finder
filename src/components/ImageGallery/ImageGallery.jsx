@@ -1,17 +1,14 @@
+import { Component } from 'react';
 import Button from 'components/Button';
 import ImageGalleryItem from 'components/ImageGalleryItem';
-import { Component } from 'react';
 import { getImagesApi } from './../../utils/imagesApi';
 import Loader from './../Loader/Loader';
 import s from './ImageGallery.module.scss';
-
-// import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 class ImageGallery extends Component {
   state = {
     images: [],
     page: 1,
-    // page: 0,
     isLoading: false,
     error: null,
   };
@@ -20,7 +17,6 @@ class ImageGallery extends Component {
     if (prevProps.query !== this.props.query) {
       this.setState({ images: [], page: 1 });
     }
-    // умова яка перевіряє чи page міняється, якщо помінявся то вона спрацьовує
     if (
       prevState.page !== this.state.page ||
       (prevProps.query !== this.props.query && this.state.page === 1)
@@ -33,13 +29,9 @@ class ImageGallery extends Component {
     }
   }
 
-  // метод який дозаписує дані ті що прийшли з бекенду по кнопці Load more
   getImages = () => {
-    // перед запитом включаємо індикатор завантаження
     this.setState({ isLoading: true, error: null });
-    // в результаті успішного запиту ми записуємо наші дані в images
     getImagesApi(this.props.query, this.state.page)
-      // беремо prev повертаємо обєкт в якому буде перезаписувати поле images в яке буде записувати новий масив в який покладе prev.images і добавить нові images які приходять із бекенду
       .then(images => {
         if (!images.length) {
           throw new Error('Bad request!!!');
@@ -74,11 +66,11 @@ class ImageGallery extends Component {
               />
             );
           })}
-          {images.length > 0 &&
-            (images.length < 12 || (
-              <Button handleLoadMoreImages={this.handleLoadMoreImages} />
-            ))}
         </ul>
+        {images.length > 0 &&
+          (images.length < 12 || (
+            <Button handleLoadMoreImages={this.handleLoadMoreImages} />
+          ))}
         {isLoading && <Loader />}
         {error && <h1>{error.message}</h1>}
       </>

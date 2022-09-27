@@ -4,6 +4,7 @@ import ImageGalleryItem from 'components/ImageGalleryItem';
 import { getImagesApi } from './../../utils/imagesApi';
 import Loader from './../Loader/Loader';
 import s from './ImageGallery.module.scss';
+import { PropTypes } from 'prop-types';
 
 class ImageGallery extends Component {
   state = {
@@ -11,6 +12,11 @@ class ImageGallery extends Component {
     page: 1,
     isLoading: false,
     error: null,
+  };
+
+  static propTypes = {
+    query: PropTypes.string.isRequired,
+    toggleModal: PropTypes.func.isRequired,
   };
 
   componentDidUpdate(prevProps, prevState) {

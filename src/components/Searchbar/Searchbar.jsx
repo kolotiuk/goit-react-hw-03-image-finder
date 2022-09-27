@@ -1,7 +1,12 @@
 import { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import s from './Searchbar.module.scss';
 
 class Searchbar extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
+
   state = {
     input: '',
   };
@@ -16,9 +21,11 @@ class Searchbar extends Component {
   };
 
   render() {
+    const { handleSubmit, handleChangeInput } = this;
+
     return (
       <header className={s.Searchbar}>
-        <form className={s.SearchForm} onSubmit={this.handleSubmit}>
+        <form className={s.SearchForm} onSubmit={handleSubmit}>
           <button type="submit" className={s['SearchForm-button']}>
             <span className={s['SearchForm-button-label']}>Search</span>
           </button>
@@ -30,7 +37,7 @@ class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={this.handleChangeInput}
+            onChange={handleChangeInput}
           />
         </form>
       </header>

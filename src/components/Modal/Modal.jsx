@@ -1,9 +1,15 @@
 import { Component } from 'react';
 import { createPortal } from 'react-dom';
+import { PropTypes } from 'prop-types';
 import s from './Modal.module.scss';
 
 const modalRef = document.querySelector('.modal');
 class Modal extends Component {
+  static propTypes = {
+    closeModal: PropTypes.func.isRequired,
+    modalImg: PropTypes.func.isRequired,
+  };
+
   handleEsc = e => {
     if (e.code === 'Escape') {
       this.props.closeModal();
